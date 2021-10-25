@@ -7,7 +7,7 @@ public class GameControl : MonoBehaviour
 {
     
     private static GameObject whoWinsTextShadow, player1MoveText, player2MoveText;
-    
+
     private static GameObject player1, player2;
 
     public static int diceSideThrown = 0;
@@ -38,7 +38,7 @@ public class GameControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player1.GetComponent<FollowPath<>().waypointIndex > 
+        if (player1.GetComponent<FollowPath>().waypointIndex > 
         player1StartWaypoint + diceSideThrown)
         {
             player1.GetComponent<FollowPath>().moveAllowed = false;
@@ -47,7 +47,7 @@ public class GameControl : MonoBehaviour
             player1StartWaypoint = player1.GetComponent<FollowPath>().waypointIndex = 1;
         }
 
-        if (player2.GetComponent<FollowPath<>().waypointIndex > 
+        if (player2.GetComponent<FollowPath>().waypointIndex > 
         player1StartWaypoint + diceSideThrown)
         {
             player2.GetComponent<FollowPath>().moveAllowed = false;
@@ -56,16 +56,16 @@ public class GameControl : MonoBehaviour
             player2StartWaypoint = player2.GetComponent<FollowPath>().waypointIndex = 1;
         }
 
-        if (player1.GetComponent<FollowPath<>().waypointIndex == 
-            player1.GetComponent<FollowPath<>().waypoints.Length)
+        if (player1.GetComponent<FollowPath>().waypointIndex == 
+            player1.GetComponent<FollowPath>().waypoints.Length)
         {
             whoWinsTextShadow.gameObject.SetActive(true);
             whoWinsTextShadow.GetComponent<Text>().text = "Player 1 Wins";
             gameOver = true;
         }
         
-        if (player2.GetComponent<FollowPath<>().waypointIndex == 
-            player2.GetComponent<FollowPath<>().waypoints.Length)
+        if (player2.GetComponent<FollowPath>().waypointIndex == 
+            player2.GetComponent<FollowPath>().waypoints.Length)
         {
             whoWinsTextShadow.gameObject.SetActive(true);
             player1MoveText.gameObject.SetActive(false);

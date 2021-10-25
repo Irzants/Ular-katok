@@ -15,13 +15,14 @@ public class Dice : MonoBehaviour
     private void Start()
     {
         rend = GetComponent<SpriteRenderer>();
-        diceSides = Resources.LoadAll<Sprite>("DiceSides/ ");
-        rend.Sprite = diceSides[5];
-        
+        diceSides = Resources.LoadAll<Sprite>("DiceSides");
+        print(diceSides);
+        rend.sprite = diceSides[1];
+
     }
 
 
-    private void OnMouseDown() 
+    private void OnMouseDown()
     {
         if (!GameControl.gameOver && coroutineAllowed)
             StartCoroutine("RollTheDice");
@@ -31,20 +32,21 @@ public class Dice : MonoBehaviour
     {
         coroutineAllowed = false;
         int randomDiceSide = 0;
-        for (int i=0; i <= 50; i++)
+        for (int i = 0; i <= 50; i++)
         {
             randomDiceSide = Random.Range(0, 6);
             rend.sprite = diceSides[randomDiceSide];
-            yield return new waitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         GameControl.diceSideThrown = randomDiceSide + 1;
         if (whosTurn == 1)
         {
             GameControl.MovePlayer(1);
-        } else if (whosTurn == -1)
+        }
+        else if (whosTurn == -1)
         {
-            GameControl>MovePlayer(2);
+            GameControl.MovePlayer(2);
         }
         whosTurn += -1;
         coroutineAllowed = true;

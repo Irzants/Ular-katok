@@ -10,6 +10,7 @@ public class FollowPath : MonoBehaviour
 
     [HideInInspector] 
     public int waypointIndex = 0;
+    
     [HideInInspector] 
     public bool moveAllowed = false;
 
