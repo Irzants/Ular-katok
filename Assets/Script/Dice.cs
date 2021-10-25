@@ -15,9 +15,9 @@ public class Dice : MonoBehaviour
     private void Start()
     {
         rend = GetComponent<SpriteRenderer>();
-        diceSides = Resources.LoadAll<Sprite>("DiceSides");
+        diceSides = Resources.LoadAll<Sprite>("DiceSides/");
         print(diceSides);
-        rend.sprite = diceSides[1];
+        rend.sprite = diceSides[5];
 
     }
 
