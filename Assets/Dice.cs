@@ -1,33 +1,44 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Dice : MonoBehaviour {
+public class Dice : MonoBehaviour
+{
 
     private Sprite[] diceSides;
     private SpriteRenderer rend;
     private int whosTurn = 1;
     private bool coroutineAllowed = true;
 
+    private static GameObject player1MoveText, player2MoveText;
     public Transform respawnPoint1;
     public Transform respawnPoint2;
 
-	// Use this for initialization
-	private void Start () {
+    // Use this for initialization
+    private void Start()
+    {
+        player1MoveText = GameObject.Find("Player1MoveText");
+        player2MoveText = GameObject.Find("Player2MoveText");
         rend = GetComponent<SpriteRenderer>();
         diceSides = Resources.LoadAll<Sprite>("DiceSides/");
         rend.sprite = diceSides[5];
-	}
+    }
 
     private void OnMouseDown()
     {
         if (!GameControl.gameOver && coroutineAllowed)
             StartCoroutine("RollTheDice");
+    }
 
-        if (whosTurn == 1)
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
+    {
+        if (player1MoveText.activeSelf)
         {
             this.transform.position = this.respawnPoint1.transform.position;
         }
-        if (whosTurn == -1)
+        else
         {
             this.transform.position = this.respawnPoint2.transform.position;
         }
@@ -48,7 +59,8 @@ public class Dice : MonoBehaviour {
         if (whosTurn == 1)
         {
             GameControl.MovePlayer(1);
-        } else if (whosTurn == -1)
+        }
+        else if (whosTurn == -1)
         {
             GameControl.MovePlayer(2);
         }
