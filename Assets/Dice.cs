@@ -8,14 +8,17 @@ public class Dice : MonoBehaviour
     private SpriteRenderer rend;
     private int whosTurn = 1;
     private bool coroutineAllowed = true;
-
     private static GameObject player1MoveText, player2MoveText;
+    private static GameObject player1, player2;
     public Transform respawnPoint1;
     public Transform respawnPoint2;
+    private bool diceClickAllowed = false;
 
     // Use this for initialization
     private void Start()
     {
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
         player1MoveText = GameObject.Find("Player1MoveText");
         player2MoveText = GameObject.Find("Player2MoveText");
         rend = GetComponent<SpriteRenderer>();
@@ -25,8 +28,11 @@ public class Dice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (!GameControl.gameOver && coroutineAllowed)
+        if (!GameControl.gameOver && coroutineAllowed && diceClickAllowed)
+        {
+            coroutineAllowed = false;
             StartCoroutine("RollTheDice");
+        }
     }
 
     /// <summary>
@@ -42,11 +48,19 @@ public class Dice : MonoBehaviour
         {
             this.transform.position = this.respawnPoint2.transform.position;
         }
+
+        if (coroutineAllowed && player1.GetComponent<FollowThePath>().moveAllowed == false && player2.GetComponent<FollowThePath>().moveAllowed == false)
+        {
+            this.diceClickAllowed = true;
+        }
+        else
+        {
+            this.diceClickAllowed = false;
+        }
     }
 
     private IEnumerator RollTheDice()
     {
-        coroutineAllowed = false;
         int randomDiceSide = 0;
         for (int i = 0; i <= 20; i++)
         {
