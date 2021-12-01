@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class GameControl : MonoBehaviour {
+public class GameControl : MonoBehaviour
+{
 
     private static GameObject whoWinsTextShadow, player1MoveText, player2MoveText;
 
@@ -16,7 +17,7 @@ public class GameControl : MonoBehaviour {
     private Transform respawnPoint;
 
     // Use this for initialization
-    void Start () 
+    void Start()
     {
         player1StartWaypoint = 0;
         player2StartWaypoint = 0;
@@ -40,68 +41,43 @@ public class GameControl : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (player1.GetComponent<FollowThePath>().waypointIndex > 
+        if (player1.GetComponent<FollowThePath>().waypointIndex >
             player1StartWaypoint + diceSideThrown)
         {
             player1MoveText.gameObject.SetActive(false);
             player2MoveText.gameObject.SetActive(true);
-            
-        
-            if(player1StartWaypoint+diceSideThrown == 4)
+
+            if (player1StartWaypoint + diceSideThrown == 4)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[15].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 15;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 15, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 14)
+            if (player1StartWaypoint + diceSideThrown == 14)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[9].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 9;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 9, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 18)
+            if (player1StartWaypoint + diceSideThrown == 18)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[23].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 23;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 23, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 25)
+            if (player1StartWaypoint + diceSideThrown == 25)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[17].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 17;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 17, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 27)
+            if (player1StartWaypoint + diceSideThrown == 27)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[34].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 34;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 34, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 37)
+            if (player1StartWaypoint + diceSideThrown == 37)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[43].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 43;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 43, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 40)
+            if (player1StartWaypoint + diceSideThrown == 40)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[19].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 19;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 19, diceSideThrown: diceSideThrown);
             }
-            if(player1StartWaypoint+diceSideThrown == 47)
+            if (player1StartWaypoint + diceSideThrown == 47)
             {
-                player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().waypoints[35].transform.position;
-                player1.GetComponent<FollowThePath>().waypointIndex = 35;
-                player1.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(1);
+                moveToLadderOrSnakePoint(player: player1, destinationPointIndex: 35, diceSideThrown: diceSideThrown);
             }
             player1.GetComponent<FollowThePath>().moveAllowed = false;
             player1StartWaypoint = player1.GetComponent<FollowThePath>().waypointIndex - 1;
@@ -113,69 +89,45 @@ public class GameControl : MonoBehaviour {
 
             player2MoveText.gameObject.SetActive(false);
             player1MoveText.gameObject.SetActive(true);
-            
-            if(player2StartWaypoint+diceSideThrown == 4)
+
+            if (player2StartWaypoint + diceSideThrown == 4)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[15].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 15;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 15, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 14)
+            if (player2StartWaypoint + diceSideThrown == 14)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[9].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 9;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 9, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 18)
+            if (player2StartWaypoint + diceSideThrown == 18)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[23].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 23;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 23, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 25)
+            if (player2StartWaypoint + diceSideThrown == 25)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[17].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 17;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 17, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 27)
+            if (player2StartWaypoint + diceSideThrown == 27)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[34].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 34;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 34, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 37)
+            if (player2StartWaypoint + diceSideThrown == 37)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[43].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 43;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 43, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 40)
+            if (player2StartWaypoint + diceSideThrown == 40)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[19].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 19;
-                player2 .GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 19, diceSideThrown: diceSideThrown);
             }
-            if(player2StartWaypoint+diceSideThrown == 47)
+            if (player2StartWaypoint + diceSideThrown == 47)
             {
-                player2.GetComponent<FollowThePath>().transform.position = player2.GetComponent<FollowThePath>().waypoints[35].transform.position;
-                player2.GetComponent<FollowThePath>().waypointIndex = 35;
-                player2.GetComponent<FollowThePath>().waypointIndex +=1;
-                MovePlayer(2);
+                moveToLadderOrSnakePoint(player: player2, destinationPointIndex: 35, diceSideThrown: diceSideThrown);
             }
-            
+
             player2.GetComponent<FollowThePath>().moveAllowed = false;
             player2StartWaypoint = player2.GetComponent<FollowThePath>().waypointIndex - 1;
         }
 
-        if (player1.GetComponent<FollowThePath>().waypointIndex == 
+        if (player1.GetComponent<FollowThePath>().waypointIndex ==
             player1.GetComponent<FollowThePath>().waypoints.Length)
         {
             whoWinsTextShadow.gameObject.SetActive(true);
@@ -196,7 +148,8 @@ public class GameControl : MonoBehaviour {
 
     public static void MovePlayer(int playerToMove)
     {
-        switch (playerToMove) { 
+        switch (playerToMove)
+        {
             case 1:
                 player1.GetComponent<FollowThePath>().moveAllowed = true;
                 break;
@@ -205,6 +158,24 @@ public class GameControl : MonoBehaviour {
                 player2.GetComponent<FollowThePath>().moveAllowed = true;
                 break;
         }
+    }
+
+    void moveToLadderOrSnakePoint(GameObject player, int destinationPointIndex, int diceSideThrown)
+    {
+        if (player.name == "Player1")
+        {
+            MovePlayer(1);
+        }
+        else if (player.name == "Player2")
+        {
+            MovePlayer(2);
+        }
+
+        var playerInstance = player.GetComponent<FollowThePath>();
+        playerInstance.transform.position = Vector2.MoveTowards(playerInstance.transform.position, playerInstance.waypoints[destinationPointIndex].transform.position, 1f * Time.deltaTime);
+        // playerInstance.transform.position = player1.GetComponent<FollowThePath>().waypoints[destinationPointIndex].transform.position;
+        playerInstance.waypointIndex = destinationPointIndex;
+        player.GetComponent<FollowThePath>().waypointIndex += 1;
     }
 
 }
