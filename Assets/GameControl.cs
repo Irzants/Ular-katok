@@ -178,4 +178,92 @@ public class GameControl : MonoBehaviour
         player.GetComponent<FollowThePath>().waypointIndex += 1;
     }
 
+#region Effisiently Code
+    private GameObject whoWinsTextShadow, player1MoveText, player2MoveText;
+    private GameObject player1, player2;
+
+    public static int diceSideThrown = 0;
+    private int[] playerStartWaypoint = new int[2];
+
+    public static bool gameOver = false;
+
+    // Use this for initialization
+    void Start()
+    {
+        diceSideThrown = 0;
+
+        whoWinsTextShadow = GameObject.Find("WhoWinsText");
+        player1MoveText = GameObject.Find("Player1MoveText");
+        player2MoveText = GameObject.Find("Player2MoveText");
+
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
+
+        player1.GetComponent<FollowThePath>().moveAllowed = false;
+        player2.GetComponent<FollowThePath>().moveAllowed = false;
+
+        whoWinsTextShadow.SetActive(false);
+        player1MoveText.SetActive(true);
+        player2MoveText.SetActive(false);
+
+        playerStartWaypoint[0] = 0;
+        playerStartWaypoint[1] = 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        for (int playerIndex = 0; playerIndex < 2; playerIndex++)
+        {
+            GameObject currentPlayer = playerIndex == 0 ? player1 : player2;
+            GameObject otherPlayer = playerIndex == 0 ? player2 : player1;
+
+            FollowThePath currentPlayerPath = currentPlayer.GetComponent<FollowThePath>();
+
+            if (currentPlayerPath.waypointIndex > playerStartWaypoint[playerIndex] + diceSideThrown)
+            {
+                playerStartWaypoint[playerIndex] = currentPlayerPath.waypointIndex - 1;
+                player1MoveText.SetActive(playerIndex == 1);
+                player2MoveText.SetActive(playerIndex == 0);
+
+                int[] ladderOrSnakePoints = { 4, 14, 18, 25, 27, 37, 40, 47 };
+                int[] destinationPoints = { 15, 9, 23, 17, 34, 43, 19, 35 };
+
+                for (int i = 0; i < ladderOrSnakePoints.Length; i++)
+                {
+                    if (playerStartWaypoint[playerIndex] + diceSideThrown == ladderOrSnakePoints[i])
+                    {
+                        moveToLadderOrSnakePoint(currentPlayer, destinationPoints[i], diceSideThrown);
+                        break;
+                    }
+                }
+
+                currentPlayerPath.moveAllowed = false;
+            }
+
+            if (currentPlayerPath.waypointIndex == currentPlayerPath.waypoints.Length)
+            {
+                whoWinsTextShadow.SetActive(true);
+                whoWinsTextShadow.GetComponent<Text>().text = "Player " + (playerIndex + 1) + " Wins";
+                gameOver = true;
+            }
+        }
+    }
+
+    public static void MovePlayer(int playerToMove)
+    {
+        GameObject player = playerToMove == 1 ? player1 : player2;
+        player.GetComponent<FollowThePath>().moveAllowed = true;
+    }
+
+    void moveToLadderOrSnakePoint(GameObject player, int destinationPointIndex, int diceSideThrown)
+    {
+        MovePlayer(player.name == "Player1" ? 1 : 2);
+        FollowThePath playerPath = player.GetComponent<FollowThePath>();
+        Vector3 destinationPosition = playerPath.waypoints[destinationPointIndex].transform.position;
+        playerPath.transform.position = Vector3.MoveTowards(playerPath.transform.position, destinationPosition, 1f * Time.deltaTime);
+        playerPath.waypointIndex = destinationPointIndex;
+        player.GetComponent<FollowThePath>().waypointIndex += 1;
+    }
+#
 }
